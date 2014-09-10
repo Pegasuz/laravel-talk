@@ -1,0 +1,110 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Laravel: PHP da gin zeer doet</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Laravel: PHP da gin zeer doet"><a name="laravel: php da gin zeer doet"></a><h1>Laravel: PHP da gin zeer doet</h1>
+<ul><li dir="ltr">Voorstelling Pieter + waarom talk en welke talk + uitleg west vlaams?
+</li><li dir="ltr">intro (new tech) &amp; door wie &amp; Geschiedenis: usage (prototyping + small apps) + community (packalyst)
+<ul><li dir="ltr">Convention over configuration (but easily adjusted)
+</li><li dir="ltr">geschiedenis laravel int kort (vanaf versie 4 stabiliteit + modules/bundles)
+</li><li dir="ltr">Shiny new stuff ( psr's) (versie &gt;= 5.4 + mcrypt) &amp; best practices
+</li><li dir="ltr">Symfony components /swiftmailer / monolog / whoops
+</li><li dir="ltr">google trends
+</li><li dir="ltr">versie 4.3 (niet overlopen, wel af en toe aanhalen) komt uit in november
+</li></ul></li><li dir="ltr">Setup &amp; config (defaults)
+<ul><li dir="ltr">Homestead vagrant config (or just use phansible/puphpet)
+</li><li dir="ltr">Composer / packagist / packalyst / create project laravel/laravel
+</li><li dir="ltr">Folder structuur (+ aanpassing 4.3)
+</li><li dir="ltr">Config files (database/redis/... -&gt; defaults = quick start) + environments + .env*.php files (gitignore)
+</li><li dir="ltr">start/global.php (error handling, logging: dailly based, exceptions,...)
+</li><li dir="ltr">Tests (laravel zelf)
+</li></ul></li><li dir="ltr">Artisan cli
+<ul><li dir="ltr">generator package (<a style="color:#3465A4" href="https://packagist.org/packages/way/generators">https://packagist.org/packages/way/generators</a>) + toevoegen in app.php + generate:resource &lt;controllerName&gt; --fields="name:string,category:string"
+</li><li dir="ltr">tinker: communicate with app
+</li><li dir="ltr">Routes voorbeeld
+</li></ul></li><li dir="ltr">routing (routes.app)
+<ul><li dir="ltr">RESTFULL (Route::get / post / put /...)
+</li><li dir="ltr">named routes
+</li><li dir="ltr">Parameters
+</li><li dir="ltr">closures
+</li><li dir="ltr">filters (auth, guest) in filters.php
+</li><li dir="ltr">Groups + prefixing
+</li><li dir="ltr">Constraints + global pattern
+</li></ul></li><li dir="ltr">Database ORM + Models + Migrations
+<ul><li dir="ltr">Migrations: start met artisan migrate
+<ul><li dir="ltr">voorbeeld
+</li><li dir="ltr">rollback, refresh, reset, migrate
+</li></ul></li><li dir="ltr">Query builder (Db::table() )
+</li><li dir="ltr">Eloquent intro (Active Record) + quick start
+</li><li dir="ltr">Create models in app/models, extending Eloquent
+<ul><li dir="ltr">Conventions: id as primary key, created_at &amp; updated_at: datetime, pluralisation of classnames in lowercase
+</li></ul></li><li dir="ltr">Eloquent functions: chainable, readable (quick functions like "latest=&gt;orderby created_ad desc") User::all() // User::find(12) // -&gt;save() // -&gt;delete()
+</li><li dir="ltr">Mapping in model classes (belongsTo, hasMany, ...)
+</li><li dir="ltr">Scopes (in Model) ModelName::Scope()
+</li><li dir="ltr">eager loading
+</li><li dir="ltr">Seeding classes + artisan db:seed
+</li><li dir="ltr">Pagination (simple pagination) (-&gt;paginate() // -&gt;links() )
+</li></ul></li><li dir="ltr">Views
+<ul><li dir="ltr">Blade (others posible)
+<ul><li dir="ltr">.blade.php
+</li><li dir="ltr">Variables php style
+</li><li dir="ltr">Sections
+</li><li dir="ltr">extends
+</li><li dir="ltr">if, foreach, unless, 
+</li></ul></li><li dir="ltr">Twitter bootstrap as default code
+</li><li dir="ltr">Layouts
+</li><li dir="ltr">includes (exterior awareness)
+</li></ul></li><li dir="ltr">Controllers (basic, rest, resources)
+</li><li dir="ltr">All controllers extend BaseController
+<ul><li dir="ltr">Returns (view + with, redirect (to, intended,), Response, response:download($filename)...)
+</li><li dir="ltr">Artisan routes
+</li><li dir="ltr">IOC in constructor
+<ul><li dir="ltr">ook mogelijk door gebruik te maken van interfaces (app:bind)
+</li></ul></li><li dir="ltr">Facades: static-like syntax to access objects and their methods in the IOC container (Input::get() // Auth::attempt() )
+</li><li dir="ltr">Facade ● How does it work?  An object is registered into the IoC container  A facade is created to reference that object  An alias is defined to use the facade without importing its namespace
+</li><li dir="ltr">Service provider aanhalen; maar te advanced
+</li><li dir="ltr">artisan generate:resource / generate:scaffold om dit alles te genereren + boilerplate
+</li></ul></li><li dir="ltr">Forms
+<ul><li dir="ltr">open / close + Route setting + Model binding
+</li><li dir="ltr">Form helper (elements + labels)
+</li><li dir="ltr">auto protection
+</li><li dir="ltr">Validation (rules)
+</li><li dir="ltr">Input::get() / ::all()
+</li></ul></li><li dir="ltr">Auth 
+<ul><li dir="ltr">Auth::atempt() // Auth::check() // Auth::logout()) // Auht::user()
+</li><li dir="ltr">artisan key:generate (bij install reeds gedaan auto)
+</li><li dir="ltr">Geen RBAC of ACL (default, wel via bundle)
+</li></ul></li><li dir="ltr">Email + Logging + Cache + queue + Events
+</li><li dir="ltr">PHPStorm (Blade support + Laravel plugin) -&gt; great IDE</li></ul>
+
+
+TO RESEARCH
+-------------------
+<ul><li dir="ltr">Ardent (Self-validating smart models for Laravel 4's Eloquent O/RM)
+</li><li dir="ltr">Pagination</li></ul>
+
+
+
+=========================================================
+
+"Laravel: PHP da gin zeer doet"
+
+Een introductie tot het Laravel Framework. Hoe snel prototypen met een expressief framework. Maak kennis met "Artisan", "Eloquent", "Facades" en meer.
+
+
+Wie is Pieter?
+
+Pieter is PHP Developer bij Studio Emma. Hij houdt zich vooral bezig met aanpassingen aan het Pimcore CMS en het bouwen van custom applicaties of systeemintegraties. Het liefst van al organiseert hij echter sociale babbels na de kantooruren.
+</div></body></html>
