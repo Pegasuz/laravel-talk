@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="css/reveal.min.css">
-    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/theme/blood.css" id="theme">
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -30,6 +30,11 @@
             document.getElementsByTagName('head')[0].appendChild(link);
         }
     </script>
+    <style>
+        .reveal h2 {
+            margin-bottom: 1em;
+        }
+    </style>
 
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
@@ -40,31 +45,655 @@
 
 <div class="reveal">
 
-    <!-- Any section element inside of this container is displayed as a slide -->
-    <div class="slides">
-        <section>
-            <h2>Laravel: PHP da gin zeer doet</h2>
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <h2>Laravel: PHP da gin zeer doet</h2>
 
-            <p>An introduction to the Laravel Framework</p>
-        </section>
+    <p>An introduction to the Laravel Framework<br></p>
+</section>
 
-        <section>
-            <h2>Heads Up</h2>
+<section>
+    <section>
+        <h2>Pieter Meyvaert</h2>
 
-            <p>
-                reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser
-                with
-                support for CSS 3D transforms to see it in its full glory.
-            </p>
+        <p>PHP Developer - Studio Emma</p>
 
-            <aside class="notes">
-                Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open
-                the speaker notes window (hit 's' on your keyboard).
-            </aside>
-        </section>
+        <p>@pegasuz_</p>
+    </section>
+    <section>
+        <h1>I</h1>
+        <ul>
+            <li>am not a Laravel guru</li>
+            <li>love exploring and learning new stuff</li>
+            <li>wanted to share my findings with you</li>
+            <li>like to build prototypes/small apps, fast</li>
+            <li>do not speak <i>west-vlaams</i></li>
+        </ul>
+    </section>
+</section>
+
+<section>
+    <h2>Talk Overview</h2>
+    <ul>
+        <li>A brief history of Laravel</li>
+        <li>Setup and config</li>
+        <li>Artisan CLI</li>
+        <li>Routing</li>
+        <li>Views</li>
+        <li>Database stuff</li>
+        <li>Controllers</li>
+        <li>Forms</li>
+        <li>Auth</li>
+        <li>Other crazy stuff</li>
+    </ul>
+</section>
+
+<section>
+    <section>
+        <h2>A brief history of Laravel</h2>
+
+        <p>&nbsp;</p>
+
+        <p class="fragment">It went from version 1 to version 4.2 in 3 years.</p>
+
+        <aside class="notes">
+            Laravel 1: june 2011<br>
+            Laravel 2: november 2011<br>
+            Laravel 3: february 2012<br>
+            Laravel 4: May 2013<br>
+            Laravel 4.2: May 2014<br><br>
+
+            Laravel 5 (4.3) November 2014
+        </aside>
+    </section>
+    <section>
+        <h2>In the beginning there was...</h2>
+        <ul>
+            <li>Taylor Otwell</li>
+            <li class="fragment">Very fast development</li>
+            <li class="fragment">Lots of changes, BC breaks</li>
+            <li class="fragment">Nobody likes that...</li>
+        </ul>
+        <aside class="notes">
+            Unstable, too fast-paced<br>
+            constanly migrating
+        </aside>
+    </section>
+    <section>
+        <h2>But then came</h2>
+        <ul>
+            <li class="fragment">Version 4.0</li>
+            <li class="fragment">From scratch, Depending on PHP 5.3 and above</li>
+            <li class="fragment">Collection of packages (Symfony, Swiftmailer, Monolog, Whoops), using composer,
+                100% covered with unittest
+            </li>
+            <li class="fragment">Stable release schedule</li>
+
+        </ul>
+        <aside class="notes">
+            Minor point release every 6 months <br>
+            revisions (patches and bug fixes) whenever they come out
+        </aside>
+    </section>
+    <section>
+        <h2>Building a community</h2>
+        <ul>
+            <li class="fragment">Convention over configuration, but adjustable</li>
+            <li class="fragment">Easy, readable, expressive code</li>
+            <li class="fragment">Fast growth in popularity</li>
+            <li class="fragment">Great docs, tutorials, screencasts<br></li>
+
+            <li class="fragment">Cool kids syndrome</li>
+            <li class="fragment">Closed community</li>
+            <li class="fragment">Reinventing the wheel (Packalyst)</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Popularity++</h2>
+
+        [ADD IMAGE OF GOOGLE TRENDS (ZF vs SF vs Laravel)]
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Setup and config</h2>
+
+        <p>
+                    <pre><code data-trim contenteditable>
+                        composer create-project laravel/laravel my-laravel-app
+                    </code></pre>
+        </p>
+        <p>
+            Setup a vagrant box using homestead (or phansible.com, or puphpet.com)
+        </p>
+        <aside class="notes">
+            http://laravel.com/docs/homestead<br>
+            Ubuntu 14.04
+            PHP 5.6
+            HHVM
+            Nginx
+            MySQL
+            Postgres
+            Node (With Bower, Grunt, and Gulp)
+            Redis
+            Memcached
+            Beanstalkd
+            Laravel Envoy
+            Fabric + HipChat Extension
+        </aside>
+    </section>
+    <section>
+        <h2>Folder structure</h2>
+
+        <p>
+            <img src="images/laravel-project-structure.png">
+        </p>
+
+        <p>This changes in version 5!</p>
+    </section>
+    <section>
+        <h2>Configuration</h2>
+        <ul>
+            <li class="fragment">Stored in app/config/*
+                <ul>
+                    <li>app.php</li>
+                    <li>auth.php</li>
+                    <li>cache.php</li>
+                    <li>database.php</li>
+                    <li>mail.php</li>
+                    <li>...</li>
+                </ul>
+            </li>
+            <li class="fragment">Default settings ensure quick-start (homestead)</li>
+            <li class="fragment">Inline documentation per setting</li>
+            <li class="fragment">Subfolders for different environments (local, testing, ... )</li>
+            <li class="fragment">Retrievable trough
+                <pre><code>Config::get('filename.configKey');</code></pre>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Bootstrapping</h2>
+        <ul>
+            <li>app/start/*</li>
+            <ul>
+                <li>global.php : Logging (method, rotation) + Error handling</li>
+            </ul>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Artisan CLI</h2>
+        <ul>
+            <li>
+                        <pre><code data-trim contenteditable>php artisan
+                        </code></pre>
+            </li>
+            <li>Based on Symfony Console Component</li>
+            <li>Helper commands
+                <ul>
+                    <li>migrate</li>
+                    <li>routes</li>
+                    <li>generate</li>
+                    <li>tinker</li>
+                </ul>
+            </li>
+            <li>Generator package (way/generators)</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Routing</h2>
+
+        <p>app/routes.php</p>
+        <ul>
+            <li>Closures</li>
+            <li>Controllers</li>
+            <li>Resource controllers (REST)</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Routing using Closures</h2>
+
+        <p>
+            Restfully
+        </p>
+        <pre><code>
+            Route::get('/', function() {
+            return 'Hello World';
+            });
+        </code></pre>
+
+<pre><code>
+    Route::post('/', function() {
+    return 'Show this on POST';
+    });
+</code></pre>
+<pre><code>
+    Route::any('/', function() {
+    return 'Hello World';
+    });
+</code></pre>
+
+    </section>
+    <section>
+        <h2>Routing using parameters</h2>
+<pre><code>
+    Route::get('/post/{id}', function($id) {
+    return 'Show post ' . $id;
+    });
+</code></pre>
+        <h4>Optional parameters</h4>
+<pre><code>
+    Route::get('/post/{id?}', function($id = null) {
+    return 'Show post ' . $id;
+    });
+</code></pre>
+        <h4>Defaults</h4>
+<pre><code>
+    Route::get('/post/{id?}', function($id=123) {
+    return 'Show post ' . $id;
+    });
+</code></pre>
+    </section>
+    <section>
+        <h2>Route parameter constraints</h2>
+<pre><code>
+    Route::get('/post/{id}', function($id) {
+    return 'Show post ' . $id;
+    })->where('id', '[0-9]+');
+</code></pre>
+    </section>
+    <section>
+        <h2>Route naming</h2>
+<pre><code>
+    Route::get('/', ['as' => 'home', function() {
+    return 'Hello World!';
+    }]);
+</code></pre>
+        <p>
+            Use named routes
+        </p>
+        <pre><code>$url = URL::route('home');</code></pre>
+    </section>
+    <section>
+        <h2>Route Filters</h2>
+
+        <p>Limit access to a route using build-in or custom filters. Place them in app/filters.php</p>
+        <ul>
+            <li>auth</li>
+            <li>auth.basic</li>
+            <li>guest</li>
+            <li>...</li>
+        </ul>
+<pre><code>
+    Route::get('/', ['before' => 'auth', function() {
+    return 'Hello Authenticated User!';
+    }]);
+</code></pre>
+    </section>
+    <section>
+        <h2>Routing through controllers</h2>
+
+        <p>Point a route to a specific action in a specific controller</p>
+        <pre><code>Route::get('post/{id}', 'PostController@show');</code></pre>
+        <pre><code>Route::get('post/{id}', 'Namespace\PostController@show');</code></pre>
+        <h4>Define names</h4>
+        <pre><code>
+            Route::get('home', array('uses' => 'HomeController@index',
+            'as' => 'home'));
+        </code></pre>
+        <h4>Use routes to action</h4>
+        <pre><code>$url = URL::action('HomeController@index');</code></pre>
+    </section>
+    <section>
+        <h2>Routing through resource controllers</h2>
+
+        <p>Use (only) restfully routes on a controller</p>
+        <pre><code>Route::resource('post', 'PostController');</code></pre>
+        <table>
+            <thead>
+            <tr>
+                <th>Verb</th>
+                <th>Path</th>
+                <th>Action</th>
+                <th>Route Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>GET</td>
+                <td>/resource</td>
+                <td>index</td>
+                <td>resource.index</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/resource/create</td>
+                <td>create</td>
+                <td>resource.create</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/resource</td>
+                <td>store</td>
+                <td>resource.store</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/resource/{resource}</td>
+                <td>show</td>
+                <td>resource.show</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/resource/{resource}/edit</td>
+                <td>edit</td>
+                <td>resource.edit</td>
+            </tr>
+            <tr>
+                <td>PUT/PATCH</td>
+                <td>/resource/{resource}</td>
+                <td>update</td>
+                <td>resource.update</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>/resource/{resource}</td>
+                <td>destroy</td>
+                <td>resource.destroy</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Views</h2>
+
+        <p>Standard php (.php) or Blade template engine (.blade.php). Found in app/views</p>
+
+        <pre><code>
+            <p>Hello, {{{ $name }}}.</p>
+
+            @if($name) {
+            <p>Hello, {{{ $name }}}</p>
+            @else
+            <p>Hello guest</p>
+            @endif
+
+            <ul>
+                @foreach($names as $name)
+                <li>{{{ $name }}}</li>
+                @endforeach
+            </ul>
+        </code></pre>
+    </section>
+    <section>
+        <h2>Layouts</h2>
+        <pre><code>
+            <!--app/views/layouts/master.blade.php-->
+            &lt;html&gt;
+            &lt;body&gt;
+            @yield('content')
+            &lt;/body&gt;
+            &lt;/html&gt;
+        </code></pre>
+        <pre><code>
+            <!--app/views/home/index.blade.php-->
+            @extends('layouts.master')
+
+            @section('content')
+            <p>This is my body content.</p>
+            @stop
+        </code></pre>
+    </section>
+    <section>
+        <h2>Includes</h2>
+
+        <p>Includes (partials) are exterior aware.</p>
+        <pre><code>@include('view.name')</code></pre>
+        <h4>Passing variables</h4>
+        <pre><code>@include('view.name', array('some'=>'data'))</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Database stuff</h2>
+        <ul>
+            <li>Migrations</li>
+            <li>Seeds</li>
+            <li>Query Builder</li>
+            <li>Eloquent</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Migrations</h2>
+
+        <p>Define your database structure and log changes.</p>
+        <h4>Create new migration file</h4>
+        <pre><code>php artisan migrate:make migrationName</code></pre>
+        <h4>Other actions are:</h4>
+        <ul>
+            <li>migrate</li>
+            <li>rollback</li>
+            <li>refresh</li>
+            <li>reset</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Migration file</h2>
+        <pre><code>
+            class CreateRestaurantsTable extends Migration {
+            public function up() {
+            Schema::create('Restaurants', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('address');
+            $table->timestamps();
+            });
+            }
+
+            public function down() {
+            Schema::drop('Restaurants');
+            }
+            }
+        </code></pre>
+    </section>
+    <section>
+        <h2>Seeds</h2>
+
+        <p>Populate the database with (dummy) records.</p>
+        <pre><code>php artisan db:seed</code></pre>
+        <h4>Posible usages</h4>
+        <ul>
+            <li>Create admin user</li>
+            <li>Create default categories/pages</li>
+            <li>Create test data</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Query Builder</h2>
+
+        <p>Perform queries on a database</p>
+        <h4>Retrieving data</h4>
+        <pre><code>$users = DB::table('users')->get();</code></pre>
+        <pre><code>$user = DB::table('users')->where('name', 'Pieter')->first();</code></pre>
+        <pre><code>$users = DB::table('users')
+            ->where('stars', '>', '15')
+            ->orderBy('name', 'desc')
+            ->get();</code></pre>
+    </section>
+    <section>
+        <h2>Query Builder</h2>
+        <h4>Inserts</h4>
+        <pre><code>DB::table('users')->insert(
+            array('email' => 'pieter@studioemma.com', 'name' => 'Pieter')
+            );</code></pre>
+        <h4>Updates</h4>
+        <pre><code>DB::table('users')
+            ->where('id', 1)
+            ->update(array('name' => 'Pieter Meyvaert'));</code></pre>
+        <h4>Deletes</h4>
+        <pre><code>DB::table('users')->where('stars', '<', 100)->delete();</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Eloquent ORM</h2>
+
+        <p>Laravel's implementation of a Active Record ORM system. Designed for a quick start, using some ground rules
+            (which can be overridden). Create models in app/models.</p>
+        <pre><code>class User extends Eloquent {}</code></pre>
+        <h4>Ground rules</h4>
+        <ul>
+            <li>Table name is lowercase plural form (User => users)</li>
+            <li>Primary key (id)</li>
+            <li>Timestamps (created_at, updated_at)</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Eloquent functions</h2>
+        <!--<p>As seen in Query Builder, functions are chainable. Function names are the same as the Query Builder.</p>-->
+        <h4>Selects</h4>
+        <pre><code>$users = User::all();</code></pre>
+        <pre><code>$users = User::find(123);</code></pre>
+        <pre><code>$users = User::where('name', 'LIKE', 'Pieter')->get();</code></pre>
+        <pre><code>$users = User::where('stars', '>', '10')->latest()->take(5)->get();</code></pre>
+    </section>
+    <section>
+        <h2>Eloquent functions</h2>
+        <h4>Insert</h4>
+        <pre><code>
+            $user = new User;
+            $user->name = 'Pieter';
+            $user->save();
+        </code></pre>
+        <h4>Update</h4>
+        <pre><code>
+            $user = User::find(123);
+            $user->email = 'pieter@studioemma.com';
+            $user->save();
+        </code></pre>
+        <h4>Delete</h4>
+        <pre><code>
+            $user = User::find(123);
+            $user->delete();
+        </code></pre>
+        <pre><code>User::destroy(123);</code></pre>
+        <pre><code>User::where('stars', '<', 10)->delete();</code></pre>
+    </section>
+    <section>
+        <h2>Soft deletes</h2>
+
+        <p>On delete, mark database record of deletion (deleted_at), but do not actual delete it. Do not show these
+            records in any queries.</p>
+        <h4>Model class</h4>
+        <pre><code>
+            class User extends Eloquent {
+            use SoftDeletingTrait;
+            protected $dates = ['deleted_at'];
+            }
+        </code></pre>
+        <h4>Migration file</h4>
+        <pre><code>$table->softDeletes();</code></pre>
+        <h4>Use deleted records in queries</h4>
+        <pre><code>$users = User::withTrashed()->where('name', 'LIKE', 'Pieter')->get();</code></pre>
+        <h4>Restore a deleted record</h4>
+        <pre><code>$user->restore();</code></pre>
+    </section>
+    <section>
+        <h2>Relationships</h2>
+
+        <p class="fragment">It can be hard to find the one you belong to.</p>
+
+        <p class="fragment">Especially if there are multiple...</p>
+    </section>
+    <section>
+        <h2>One To One</h2>
+        <pre><code>
+            class User extends Eloquent {
+            public function phone()
+            {
+            return $this->hasOne('Phone');
+            }
+            }
+
+            class Phone extends Eloquent {
+            public function user()
+            {
+            return $this->belongsTo('User');
+            }
+            }
+        </code></pre>
+        <pre><code>$phone = User::find(123)->phone;</code></pre>
+        <pre><code>$user = Phone::find(321)->user;</code></pre>
+    </section>
+    <section>
+        <h2>One To Many</h2>
+        <pre><code>
+            class Talk extends Eloquent {
+            public function comments()
+            {
+            return $this->hasMany('Comment');
+            }
+            }
+
+            class Comment extends Eloquent {
+            public function talk()
+            {
+            return $this->belongsTo('Talk');
+            }
+            }
+        </code></pre>
+        <pre><code>$comments = Talk::find(123)->comments;</code></pre>
+        <pre><code>$comments = Talk::find(123)->comments()->where('title', 'LIKE', 'great')->first();</code></pre>
+        <pre><code>$talk = Comment::find(321)->talk();</code></pre>
+    </section>
+    <section>
+        <h2>Many to Many</h2>
+        <pre><code>
+            class User extends Eloquent {
+            public function talks()
+            {
+            return $this->belongsToMany('Talk');
+            }
+            }
+
+            class Talk extends Eloquent {
+            public function users()
+            {
+            return $this->belongsToMany('User');
+            }
+            }
+        </code></pre>
+        <pre><code>$talks = User::find(123)->talks</code></pre>
+        <pre><code>$users = Talk::find(321)->users</code></pre>
+        <h4>Create database table</h4>
+        <pre><code>php artisan generate:pivot users talks</code></pre>
+    </section>
+
+</section>
+<section>
+    <section>
+        <h2>Controllers</h2>
+    </section>
+</section>
 
 
-    </div>
+<section>
+    <section>
+        <h2>Thanks</h2>
+
+        <p>[Image of Thats all folks]</p>
+
+        <p>https://joind.in/11933</p>
+    </section>
+</section>
+</div>
 
 </div>
 
@@ -80,6 +709,7 @@
         progress: true,
         history: true,
         center: true,
+        slideNumber: true,
 
         theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
         transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
