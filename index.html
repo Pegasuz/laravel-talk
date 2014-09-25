@@ -84,7 +84,7 @@
         <li>Database stuff</li>
         <li>Controllers</li>
         <li>Forms</li>
-        <li>Auth</li>
+        <li>Authentication</li>
         <li>Other crazy stuff</li>
     </ul>
 </section>
@@ -680,17 +680,181 @@
 <section>
     <section>
         <h2>Controllers</h2>
+
+        <p>Can be found in app/controllers. They all extend BaseController</p>
+        <pre><code>
+            class UserController extends BaseController {
+
+            public function showProfile($id)
+            {
+            $user = User::find($id);
+
+            return View::make('user.profile', ['user' => $user]);
+            }
+
+            }
+        </code></pre>
     </section>
 </section>
+<section>
+    <section>
+        <h2>Forms</h2>
 
+        <p>Forms are defined in the views</p>
+        <pre><code>
+            {{ Form::open(['action' => 'PostController@save')] }}
+            {{ Form::label('name', 'Your name') }}
+            {{ Form::text('name') }}
+
+            {{ Form::label('language','Your favorite language') }}
+            {{ Form::select('language', ['php', 'asp'], 'php') }}
+
+            {{ Form::submit('Submit!') }}
+            {{ Form::close() }}
+        </code></pre>
+    </section>
+    <section>
+        <h2>Form model binding</h2>
+
+        <p>Automagically fill the form based on a given model</p>
+        <pre><code>
+            {{ Form::model($user, ['action' => 'PostController@save')] }}
+            {{ Form::label('name', 'Your name') }}
+            {{ Form::text('name') }}
+
+            {{ Form::submit('Submit!') }}
+            {{ Form::close() }}
+        </code></pre>
+    </section>
+    <section>
+        <h2>Form data in controllers</h2>
+        <pre><code>$name = Input::get('name');</code></pre>
+        <h4>Default values</h4>
+        <pre><code>$name = Input::get('name', 'Pieter');</code></pre>
+        <h4>Get all values</h4>
+        <pre><code>$input = Input::all();</code></pre>
+        <h4>Check if value exists</h4>
+        <pre><code>Input::has('name')</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Authentication</h2>
+
+        <p>Build-in authentication. Default uses the provided User model. No RBAC!</p>
+        <h4>Login</h4>
+        <pre><code>
+            if (Auth::attempt(['email' => $email, 'password' => $password]))
+            {
+            // Authenticated
+            }
+        </code></pre>
+        <h4>Check authentication</h4>
+        <pre><code>Auth::check()</code></pre>
+        <h4>Access logged in user</h4>
+        <pre><code>$user = Auth::user()</code></pre>
+        <h4>Logout</h4>
+        <pre><code>Auth::logout();</code></pre>
+    </section>
+    <section>
+        <h2>Remember our routes?</h2>
+        <pre><code>
+            Route::get('/', ['before' => 'auth', function() {
+            return 'Hello Authenticated User!';
+            }]);
+        </code></pre>
+        <p>It all makes sense now!</p>
+    </section>
+    <section>
+        <h2>Lost your password?</h2>
+        <pre><code>
+            // Create migration
+            php artisan auth:reminders-table
+
+            // Run the migration
+            php artisan migrate
+
+            // Generate a controller for this
+            php artisan auth:reminders-controller
+
+            // Create a view ( reminders/password.remind.blade.php )
+            {{ Form::open(['action'=>'RemindersController@postRemind']) }}
+            {{ Form::label('email') }}
+            {{ Form::test('email') }}
+            {{ Form::submit('Submit!') }}
+            {{ Form:close() }}
+        </code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Other crazy stuff</h2>
+        <h4>Sending Emails</h4>
+        <pre><code>
+            Mail::send('emails.welcome', ['key' => 'value'], function($message)
+            {
+            $message->to('foo@example.com', 'John Smith')->subject('Welcome!');
+            });
+        </code></pre>
+        <h4>Logging</h4>
+        <pre><code>
+            // app/start/global.php
+            Log::useDailyFiles(storage_path().'/logs/logfile.log');
+        </code></pre>
+    </section>
+    <section>
+        <h2>More crazy stuff</h2>
+        <h4>Build in queue support</h4>
+        <pre><code>
+            Queue::push('SendEmail', array('message' => $message));
+
+            class SendEmail {
+            public function fire($job, $data) {}
+            }
+        </code></pre>
+        <h4>Events</h4>
+        <pre><code>
+            Event::listen('auth.login', function($user) {
+            $user->last_login = new DateTime;
+            $user->save();
+            });
+
+            $event = Event::fire('auth.login', [$user]);
+        </code></pre>
+    </section>
+    <section>
+        <h2>Even more</h2>
+        <h4>Envoy Task Runner</h4>
+        <pre><code>
+            @servers(['web' => '192.168.1.1'])
+            @task('deploy', ['on' => 'web'])
+                cd /var/www
+                git pull origin master
+            @endtask
+
+            envoy run deploy
+        </code></pre>
+    </section>
+</section>
+<section>
+    <h2>Use the right tools</h2>
+    <pre><code>composer require barryvdh/laravel-ide-helper</code></pre>
+
+    <p><img src="images/phpstorm.gif" border="none" width="50%"></p>
+    <ul>
+        <li>IDE helper support</li>
+        <li>Blade support</li>
+        <li>Laravel plugin</li>
+    </ul>
+</section>
 
 <section>
     <section>
-        <h2>Thanks</h2>
-
-        <p>[Image of Thats all folks]</p>
-
+        <h2>Thanks!</h2>
         <p>https://joind.in/11933</p>
+
+        <p><img src="images/thats-all-folks.jpg"> </p>
+
     </section>
 </section>
 </div>
