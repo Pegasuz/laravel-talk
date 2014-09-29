@@ -126,7 +126,7 @@
             <li class="fragment">Version 4.0</li>
             <li class="fragment">From scratch, Depending on PHP 5.3 and above</li>
             <li class="fragment">Collection of packages (Symfony, Swiftmailer, Monolog, Whoops), using composer,
-                100% covered with unittest
+                "100%" covered with unittest
             </li>
             <li class="fragment">Stable release schedule</li>
 
@@ -159,13 +159,11 @@
     <section>
         <h2>Setup and config</h2>
 
-        <p>
-                    <pre><code data-trim contenteditable>
-                        composer create-project laravel/laravel my-laravel-app
-                    </code></pre>
-        </p>
-        <p>
-            Setup a vagrant box using homestead (or phansible.com, or puphpet.com)
+        <pre class="fragment"><code>composer create-project laravel/laravel my-laravel-app</code></pre>
+        <pre class="fragment"><code>composer global require "laravel/installer=~1.1"</code></pre>
+        <pre class="fragment"><code>laravel new my-laravel-app</code></pre>
+        <p class="fragment">
+            Setup a vagrant virtual machine using homestead (or phansible.com, or puphpet.com)
         </p>
         <aside class="notes">
             http://laravel.com/docs/homestead<br>
@@ -213,34 +211,25 @@
             </li>
         </ul>
     </section>
-    <section>
-        <h2>Bootstrapping</h2>
-        <ul>
-            <li>app/start/*</li>
-            <ul>
-                <li>global.php : Logging (method, rotation) + Error handling</li>
-            </ul>
-        </ul>
-    </section>
 </section>
 <section>
     <section>
         <h2>Artisan CLI</h2>
         <ul>
-            <li>
-                        <pre><code data-trim contenteditable>php artisan
-                        </code></pre>
+            <li class="fragment">
+                        <pre><code>php artisan</code></pre>
             </li>
-            <li>Based on Symfony Console Component</li>
-            <li>Helper commands
+            <li class="fragment">Based on Symfony Console Component</li>
+            <li class="fragment">Helper commands
                 <ul>
                     <li>migrate</li>
                     <li>routes</li>
                     <li>generate</li>
                     <li>tinker</li>
+                    <li>...</li>
                 </ul>
             </li>
-            <li>Generator package (way/generators)</li>
+            <li class="fragment">Generator package (way/generators)</li>
         </ul>
     </section>
 </section>
@@ -249,7 +238,7 @@
         <h2>Routing</h2>
 
         <p>app/routes.php</p>
-        <ul>
+        <ul class="fragment">
             <li>Closures</li>
             <li>Controllers</li>
             <li>Resource controllers (REST)</li>
@@ -257,22 +246,18 @@
     </section>
     <section>
         <h2>Routing using Closures</h2>
-
-        <p>
-            Restfully
-        </p>
-        <pre><code>
+        <pre class="fragment"><code>
             Route::get('/', function() {
             return 'Hello World';
             });
         </code></pre>
 
-<pre><code>
+<pre class="fragment"><code>
     Route::post('/', function() {
     return 'Show this on POST';
     });
 </code></pre>
-<pre><code>
+<pre class="fragment"><code>
     Route::any('/', function() {
     return 'Hello World';
     });
@@ -281,19 +266,19 @@
     </section>
     <section>
         <h2>Routing using parameters</h2>
-<pre><code>
+<pre class="fragment"><code>
     Route::get('/post/{id}', function($id) {
     return 'Show post ' . $id;
     });
 </code></pre>
-        <h4>Optional parameters</h4>
-<pre><code>
+        <h4 class="fragment">Optional parameters</h4>
+<pre class="fragment"><code>
     Route::get('/post/{id?}', function($id = null) {
     return 'Show post ' . $id;
     });
 </code></pre>
-        <h4>Defaults</h4>
-<pre><code>
+        <h4 class="fragment">Defaults</h4>
+<pre class="fragment"><code>
     Route::get('/post/{id?}', function($id=123) {
     return 'Show post ' . $id;
     });
@@ -301,7 +286,7 @@
     </section>
     <section>
         <h2>Route parameter constraints</h2>
-<pre><code>
+<pre class="fragment"><code>
     Route::get('/post/{id}', function($id) {
     return 'Show post ' . $id;
     })->where('id', '[0-9]+');
@@ -309,27 +294,27 @@
     </section>
     <section>
         <h2>Route naming</h2>
-<pre><code>
+<pre class="fragment"><code>
     Route::get('/', ['as' => 'home', function() {
     return 'Hello World!';
     }]);
 </code></pre>
-        <p>
+        <h4 class="fragment">
             Use named routes
-        </p>
-        <pre><code>$url = URL::route('home');</code></pre>
+        </h4>
+        <pre class="fragment"><code>$url = URL::route('home');</code></pre>
     </section>
     <section>
         <h2>Route Filters</h2>
 
         <p>Limit access to a route using build-in or custom filters. Place them in app/filters.php</p>
-        <ul>
+        <ul class="fragment">
             <li>auth</li>
             <li>auth.basic</li>
             <li>guest</li>
             <li>...</li>
         </ul>
-<pre><code>
+<pre class="fragment"><code>
     Route::get('/', ['before' => 'auth', function() {
     return 'Hello Authenticated User!';
     }]);
@@ -339,22 +324,22 @@
         <h2>Routing through controllers</h2>
 
         <p>Point a route to a specific action in a specific controller</p>
-        <pre><code>Route::get('post/{id}', 'PostController@show');</code></pre>
-        <pre><code>Route::get('post/{id}', 'Namespace\PostController@show');</code></pre>
-        <h4>Define names</h4>
-        <pre><code>
-            Route::get('home', array('uses' => 'HomeController@index',
-            'as' => 'home'));
+        <pre class="fragment"><code>Route::get('post/{id}', 'PostController@show');</code></pre>
+        <pre class="fragment"><code>Route::get('post/{id}', 'Namespace\PostController@show');</code></pre>
+        <h4 class="fragment">Define names</h4>
+        <pre class="fragment"><code>
+            Route::get('home', ['uses' => 'HomeController@index',
+            'as' => 'home']);
         </code></pre>
-        <h4>Use routes to action</h4>
-        <pre><code>$url = URL::action('HomeController@index');</code></pre>
+        <h4 class="fragment">Use routes to action</h4>
+        <pre class="fragment"><code>$url = URL::action('HomeController@index');</code></pre>
     </section>
     <section>
         <h2>Routing through resource controllers</h2>
 
         <p>Use (only) restfully routes on a controller</p>
-        <pre><code>Route::resource('post', 'PostController');</code></pre>
-        <table>
+        <pre class="fragment"><code>Route::resource('post', 'PostController');</code></pre>
+        <table class="fragment">
             <thead>
             <tr>
                 <th>Verb</th>
@@ -416,7 +401,7 @@
 
         <p>Standard php (.php) or Blade template engine (.blade.php). Found in app/views</p>
 
-        <pre><code>
+        <pre class="fragment"><code>
             <p>Hello, {{{ $name }}}.</p>
 
             @if($name) {
@@ -433,8 +418,15 @@
         </code></pre>
     </section>
     <section>
+        <h2>Using views</h2>
+        <pre><code>Route::get('/', function()
+            {
+            return View::make('home.index', ['name' => 'Pieter']);
+            });</code></pre>
+    </section>
+    <section>
         <h2>Layouts</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             <!--app/views/layouts/master.blade.php-->
             &lt;html&gt;
             &lt;body&gt;
@@ -442,7 +434,7 @@
             &lt;/body&gt;
             &lt;/html&gt;
         </code></pre>
-        <pre><code>
+        <pre class="fragment"><code>
             <!--app/views/home/index.blade.php-->
             @extends('layouts.master')
 
@@ -454,10 +446,10 @@
     <section>
         <h2>Includes</h2>
 
-        <p>Includes (partials) are exterior aware.</p>
-        <pre><code>@include('view.name')</code></pre>
-        <h4>Passing variables</h4>
-        <pre><code>@include('view.name', array('some'=>'data'))</code></pre>
+        <p class="fragment">Includes (partials) are exterior aware.</p>
+        <pre class="fragment"><code>@include('view.name')</code></pre>
+        <h4 class="fragment">Passing variables</h4>
+        <pre class="fragment"><code>@include('view.name', array('some'=>'data'))</code></pre>
     </section>
 </section>
 <section>
@@ -473,20 +465,20 @@
     <section>
         <h2>Migrations</h2>
 
-        <p>Define your database structure and log changes.</p>
-        <h4>Create new migration file</h4>
-        <pre><code>php artisan migrate:make migrationName</code></pre>
-        <h4>Other actions are:</h4>
-        <ul>
-            <li>migrate</li>
-            <li>rollback</li>
-            <li>refresh</li>
-            <li>reset</li>
+        <p>Define your database structure and log changes.</p><p>&nbsp;</p>
+        <h4 class="fragment">Create new migration file</h4>
+        <pre class="fragment"><code>php artisan migrate:make migrationName</code></pre>
+        <h4 class="fragment">Other actions are:</h4>
+        <ul class="fragment">
+            <li>migrate (run migrations)</li>
+            <li>rollback (rollback last migration)</li>
+            <li>reset (rollback all migrations)</li>
+            <li>refresh (rollback all migrations + run migrations)</li>
         </ul>
     </section>
     <section>
         <h2>Migration file</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             class CreateRestaurantsTable extends Migration {
             public function up() {
             Schema::create('Restaurants', function(Blueprint $table) {
@@ -507,9 +499,9 @@
         <h2>Seeds</h2>
 
         <p>Populate the database with (dummy) records.</p>
-        <pre><code>php artisan db:seed</code></pre>
-        <h4>Posible usages</h4>
-        <ul>
+        <pre class="fragment"><code>php artisan db:seed</code></pre>
+        <h4 class="fragment">Posible usages</h4>
+        <ul class="fragment">
             <li>Create admin user</li>
             <li>Create default categories/pages</li>
             <li>Create test data</li>
@@ -519,26 +511,26 @@
         <h2>Query Builder</h2>
 
         <p>Perform queries on a database</p>
-        <h4>Retrieving data</h4>
-        <pre><code>$users = DB::table('users')->get();</code></pre>
-        <pre><code>$user = DB::table('users')->where('name', 'Pieter')->first();</code></pre>
-        <pre><code>$users = DB::table('users')
+        <h4 class="fragment">Retrieving data</h4>
+        <pre class="fragment"><code>$users = DB::table('users')->get();</code></pre>
+        <pre class="fragment"><code>$user = DB::table('users')->where('name', 'Pieter')->first();</code></pre>
+        <pre class="fragment"><code>$users = DB::table('users')
             ->where('stars', '>', '15')
             ->orderBy('name', 'desc')
             ->get();</code></pre>
     </section>
     <section>
         <h2>Query Builder</h2>
-        <h4>Inserts</h4>
-        <pre><code>DB::table('users')->insert(
+        <h4 class="fragment">Inserts</h4>
+        <pre class="fragment"><code>DB::table('users')->insert(
             array('email' => 'pieter@studioemma.com', 'name' => 'Pieter')
             );</code></pre>
-        <h4>Updates</h4>
-        <pre><code>DB::table('users')
+        <h4 class="fragment">Updates</h4>
+        <pre class="fragment"><code>DB::table('users')
             ->where('id', 1)
             ->update(array('name' => 'Pieter Meyvaert'));</code></pre>
-        <h4>Deletes</h4>
-        <pre><code>DB::table('users')->where('stars', '<', 100)->delete();</code></pre>
+        <h4 class="fragment">Deletes</h4>
+        <pre class="fragment"><code>DB::table('users')->where('stars', '<', 100)->delete();</code></pre>
     </section>
 </section>
 <section>
@@ -547,63 +539,63 @@
 
         <p>Laravel's implementation of a Active Record ORM system. Designed for a quick start, using some ground rules
             (which can be overridden). Create models in app/models.</p>
-        <pre><code>class User extends Eloquent {}</code></pre>
-        <h4>Ground rules</h4>
+        <pre class="fragment"><code>class User extends Eloquent {}</code></pre>
+        <h4 class="fragment">Ground rules</h4>
         <ul>
-            <li>Table name is lowercase plural form (User => users)</li>
-            <li>Primary key (id)</li>
-            <li>Timestamps (created_at, updated_at)</li>
+            <li class="fragment">Table name is lowercase plural form (User => users)</li>
+            <li class="fragment">Primary key (id)</li>
+            <li class="fragment">Timestamps (created_at, updated_at)</li>
         </ul>
     </section>
     <section>
         <h2>Eloquent functions</h2>
         <!--<p>As seen in Query Builder, functions are chainable. Function names are the same as the Query Builder.</p>-->
         <h4>Selects</h4>
-        <pre><code>$users = User::all();</code></pre>
-        <pre><code>$users = User::find(123);</code></pre>
-        <pre><code>$users = User::where('name', 'LIKE', 'Pieter')->get();</code></pre>
-        <pre><code>$users = User::where('stars', '>', '10')->latest()->take(5)->get();</code></pre>
+        <pre class="fragment"><code>$users = User::all();</code></pre>
+        <pre class="fragment"><code>$users = User::find(123);</code></pre>
+        <pre class="fragment"><code>$users = User::where('name', 'LIKE', 'Pieter')->get();</code></pre>
+        <pre class="fragment"><code>$users = User::where('stars', '>', '10')->latest()->take(5)->get();</code></pre>
     </section>
     <section>
         <h2>Eloquent functions</h2>
-        <h4>Insert</h4>
-        <pre><code>
+        <h4 class="fragment">Insert</h4>
+        <pre  class="fragment"><code>
             $user = new User;
             $user->name = 'Pieter';
             $user->save();
         </code></pre>
-        <h4>Update</h4>
-        <pre><code>
+        <h4 class="fragment">Update</h4>
+        <pre class="fragment"><code>
             $user = User::find(123);
             $user->email = 'pieter@studioemma.com';
             $user->save();
         </code></pre>
-        <h4>Delete</h4>
-        <pre><code>
+        <h4 class="fragment">Delete</h4>
+        <pre class="fragment"><code>
             $user = User::find(123);
             $user->delete();
         </code></pre>
-        <pre><code>User::destroy(123);</code></pre>
-        <pre><code>User::where('stars', '<', 10)->delete();</code></pre>
+        <pre class="fragment"><code>User::destroy(123);</code></pre>
+        <pre class="fragment"><code>User::where('stars', '<', 10)->delete();</code></pre>
     </section>
     <section>
         <h2>Soft deletes</h2>
 
         <p>On delete, mark database record of deletion (deleted_at), but do not actual delete it. Do not show these
             records in any queries.</p>
-        <h4>Model class</h4>
-        <pre><code>
+        <h4 class="fragment">Model class</h4>
+        <pre class="fragment"><code>
             class User extends Eloquent {
             use SoftDeletingTrait;
             protected $dates = ['deleted_at'];
             }
         </code></pre>
-        <h4>Migration file</h4>
-        <pre><code>$table->softDeletes();</code></pre>
-        <h4>Use deleted records in queries</h4>
-        <pre><code>$users = User::withTrashed()->where('name', 'LIKE', 'Pieter')->get();</code></pre>
-        <h4>Restore a deleted record</h4>
-        <pre><code>$user->restore();</code></pre>
+        <h4 class="fragment">Migration file</h4>
+        <pre class="fragment"><code>$table->softDeletes();</code></pre>
+        <h4 class="fragment">Use deleted records in queries</h4>
+        <pre class="fragment"><code>$users = User::withTrashed()->where('name', 'LIKE', 'Pieter')->get();</code></pre>
+        <h4 class="fragment">Restore a deleted record</h4>
+        <pre class="fragment"><code>$user->restore();</code></pre>
     </section>
     <section>
         <h2>Relationships</h2>
@@ -614,7 +606,7 @@
     </section>
     <section>
         <h2>One To One</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             class User extends Eloquent {
             public function phone()
             {
@@ -629,12 +621,12 @@
             }
             }
         </code></pre>
-        <pre><code>$phone = User::find(123)->phone;</code></pre>
-        <pre><code>$user = Phone::find(321)->user;</code></pre>
+        <pre class="fragment"><code>$phone = User::find(123)->phone;</code></pre>
+        <pre class="fragment"><code>$user = Phone::find(321)->user;</code></pre>
     </section>
     <section>
         <h2>One To Many</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             class Talk extends Eloquent {
             public function comments()
             {
@@ -649,13 +641,16 @@
             }
             }
         </code></pre>
-        <pre><code>$comments = Talk::find(123)->comments;</code></pre>
-        <pre><code>$comments = Talk::find(123)->comments()->where('title', 'LIKE', 'great')->first();</code></pre>
-        <pre><code>$talk = Comment::find(321)->talk();</code></pre>
+        <pre class="fragment"><code>$comments = Talk::find(123)->comments;</code></pre>
+        <pre class="fragment"><code>$comments = Talk::find(123)
+            ->comments()
+            ->where('title', 'LIKE', 'great')
+            ->first();</code></pre>
+        <pre class="fragment"><code>$talk = Comment::find(321)->talk();</code></pre>
     </section>
     <section>
         <h2>Many to Many</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             class User extends Eloquent {
             public function talks()
             {
@@ -670,10 +665,10 @@
             }
             }
         </code></pre>
-        <pre><code>$talks = User::find(123)->talks</code></pre>
-        <pre><code>$users = Talk::find(321)->users</code></pre>
-        <h4>Create database table</h4>
-        <pre><code>php artisan generate:pivot users talks</code></pre>
+        <pre class="fragment"><code>$talks = User::find(123)->talks</code></pre>
+        <pre class="fragment"><code>$users = Talk::find(321)->users</code></pre>
+        <h4 class="fragment">Create database table</h4>
+        <pre class="fragment"><code>php artisan generate:pivot users talks</code></pre>
     </section>
 
 </section>
@@ -682,7 +677,7 @@
         <h2>Controllers</h2>
 
         <p>Can be found in app/controllers. They all extend BaseController</p>
-        <pre><code>
+        <pre class="fragment"><code>
             class UserController extends BaseController {
 
             public function showProfile($id)
@@ -701,7 +696,7 @@
         <h2>Forms</h2>
 
         <p>Forms are defined in the views</p>
-        <pre><code>
+        <pre class="fragment"><code>
             {{ Form::open(['action' => 'PostController@save')] }}
             {{ Form::label('name', 'Your name') }}
             {{ Form::text('name') }}
@@ -717,7 +712,7 @@
         <h2>Form model binding</h2>
 
         <p>Automagically fill the form based on a given model</p>
-        <pre><code>
+        <pre class="fragment"><code>
             {{ Form::model($user, ['action' => 'PostController@save')] }}
             {{ Form::label('name', 'Your name') }}
             {{ Form::text('name') }}
@@ -728,13 +723,13 @@
     </section>
     <section>
         <h2>Form data in controllers</h2>
-        <pre><code>$name = Input::get('name');</code></pre>
-        <h4>Default values</h4>
-        <pre><code>$name = Input::get('name', 'Pieter');</code></pre>
-        <h4>Get all values</h4>
-        <pre><code>$input = Input::all();</code></pre>
-        <h4>Check if value exists</h4>
-        <pre><code>Input::has('name')</code></pre>
+        <pre class="fragment"><code>$name = Input::get('name');</code></pre>
+        <h4 class="fragment">Default values</h4>
+        <pre class="fragment"><code>$name = Input::get('name', 'Pieter');</code></pre>
+        <h4 class="fragment">Get all values</h4>
+        <pre class="fragment"><code>$input = Input::all();</code></pre>
+        <h4 class="fragment">Check if value exists</h4>
+        <pre class="fragment"><code>Input::has('name')</code></pre>
     </section>
 </section>
 <section>
@@ -742,32 +737,32 @@
         <h2>Authentication</h2>
 
         <p>Build-in authentication. Default uses the provided User model. No RBAC!</p>
-        <h4>Login</h4>
-        <pre><code>
+        <h4 class="fragment">Login</h4>
+        <pre class="fragment"><code>
             if (Auth::attempt(['email' => $email, 'password' => $password]))
             {
             // Authenticated
             }
         </code></pre>
-        <h4>Check authentication</h4>
-        <pre><code>Auth::check()</code></pre>
-        <h4>Access logged in user</h4>
-        <pre><code>$user = Auth::user()</code></pre>
-        <h4>Logout</h4>
-        <pre><code>Auth::logout();</code></pre>
+        <h4 class="fragment">Check authentication</h4>
+        <pre class="fragment"><code>Auth::check()</code></pre>
+        <h4 class="fragment">Access logged in user</h4>
+        <pre class="fragment"><code>$user = Auth::user()</code></pre>
+        <h4 class="fragment">Logout</h4>
+        <pre class="fragment"><code>Auth::logout();</code></pre>
     </section>
     <section>
         <h2>Remember our routes?</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             Route::get('/', ['before' => 'auth', function() {
             return 'Hello Authenticated User!';
             }]);
         </code></pre>
-        <p>It all makes sense now!</p>
+        <p class="fragment">It all makes sense now!</p>
     </section>
     <section>
         <h2>Lost your password?</h2>
-        <pre><code>
+        <pre class="fragment"><code>
             // Create migration
             php artisan auth:reminders-table
 
@@ -789,31 +784,31 @@
 <section>
     <section>
         <h2>Other crazy stuff</h2>
-        <h4>Sending Emails</h4>
-        <pre><code>
+        <h4 class="fragment">Sending Emails</h4>
+        <pre class="fragment"><code>
             Mail::send('emails.welcome', ['key' => 'value'], function($message)
             {
             $message->to('foo@example.com', 'John Smith')->subject('Welcome!');
             });
         </code></pre>
-        <h4>Logging</h4>
-        <pre><code>
+        <h4 class="fragment">Logging</h4>
+        <pre class="fragment"><code>
             // app/start/global.php
             Log::useDailyFiles(storage_path().'/logs/logfile.log');
         </code></pre>
     </section>
     <section>
         <h2>More crazy stuff</h2>
-        <h4>Build in queue support</h4>
-        <pre><code>
+        <h4 class="fragment">Build in queue support</h4>
+        <pre class="fragment"><code>
             Queue::push('SendEmail', array('message' => $message));
 
             class SendEmail {
             public function fire($job, $data) {}
             }
         </code></pre>
-        <h4>Events</h4>
-        <pre><code>
+        <h4 class="fragment">Events</h4>
+        <pre class="fragment"><code>
             Event::listen('auth.login', function($user) {
             $user->last_login = new DateTime;
             $user->save();
@@ -824,8 +819,8 @@
     </section>
     <section>
         <h2>Even more</h2>
-        <h4>Envoy Task Runner</h4>
-        <pre><code>
+        <h4 class="fragment">Envoy Task Runner</h4>
+        <pre class="fragment"><code>
             @servers(['web' => '192.168.1.1'])
             @task('deploy', ['on' => 'web'])
                 cd /var/www
@@ -838,10 +833,10 @@
 </section>
 <section>
     <h2>Use the right tools</h2>
-    <pre><code>composer require barryvdh/laravel-ide-helper</code></pre>
+    <pre class="fragment"><code>composer require barryvdh/laravel-ide-helper</code></pre>
 
-    <p><img src="images/phpstorm.gif" border="none" width="50%"></p>
-    <ul>
+    <p class="fragment"><img src="images/phpstorm.gif" border="none" width="50%"></p>
+    <ul class="fragment">
         <li>IDE helper support</li>
         <li>Blade support</li>
         <li>Laravel plugin</li>
@@ -850,12 +845,12 @@
 <section>
     <h2>Laravel 5 preview</h2>
     <ul>
-        <li>New directory structure</li>
-        <li>New and improved validation</li>
-        <li>New File Generators</li>
-        <li>Flysystem</li>
-        <li>Socialite</li>
-        <li>Route Caching</li>
+        <li class="fragment">New directory structure</li>
+        <li class="fragment">New and improved validation</li>
+        <li class="fragment">New File Generators</li>
+        <li class="fragment">Flysystem</li>
+        <li class="fragment">Socialite</li>
+        <li class="fragment">Route Caching</li>
     </ul>
 </section>
 <section>
@@ -870,7 +865,7 @@
         <h2>Thanks!</h2>
         <p>https://joind.in/11933</p>
 
-        <p><img src="images/thats-all-folks.jpg"> </p>
+        <p class="fragment"><img src="images/thats-all-folks.jpg"> </p>
 
     </section>
 </section>
