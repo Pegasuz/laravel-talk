@@ -68,7 +68,7 @@
             <li>love exploring and learning new stuff</li>
             <li>wanted to share my findings with you</li>
             <li>like to build prototypes/small apps, fast</li>
-            <li>do not speak <i>west-vlaams</i></li>
+            <li class="fragment">do not speak <i>west-vloams</i></li>
         </ul>
     </section>
 </section>
@@ -146,13 +146,31 @@
 
             <li class="fragment">Cool kids syndrome</li>
             <li class="fragment">Closed community</li>
-            <li class="fragment">Reinventing the wheel (Packalyst)</li>
+            <!--<li class="fragment">Reinventing the wheel (Packalyst)</li>-->
         </ul>
     </section>
     <section>
         <h2>Popularity++</h2>
 
         <p><img src="images/trends.png"> </p>
+    </section>
+    <section>
+        <h2>Packagist</h2>
+        <p>Installs in the last 30 days</p>
+        <table>
+            <tr>
+                <td>Zend Framework 2</td>
+                <td>70 000</td>
+            </tr>
+            <tr>
+                <td>Symfony 2</td>
+                <td>38 000</td>
+            </tr>
+            <tr>
+                <td>Laravel 4</td>
+                <td>76 000</td>
+            </tr>
+        </table>
     </section>
 </section>
 <section>
@@ -181,15 +199,15 @@
             Fabric + HipChat Extension
         </aside>
     </section>
-    <section>
-        <h2>Folder structure</h2>
+    <!--<section>-->
+        <!--<h2>Folder structure</h2>-->
 
-        <p>
-            <img src="images/laravel-project-structure.png">
-        </p>
+        <!--<p>-->
+            <!--<img src="images/laravel-project-structure.png">-->
+        <!--</p>-->
 
-        <p>This changes in version 5!</p>
-    </section>
+        <!--<p>This changes in version 5!</p>-->
+    <!--</section>-->
     <section>
         <h2>Configuration</h2>
         <ul>
@@ -817,8 +835,6 @@ Event::listen('auth.login', function($user) {
     $user->last_login = new DateTime;
     $user->save();
 });
-
-$event = Event::fire('auth.login', [$user]);
         </code></pre>
     </section>
     <section>
@@ -827,12 +843,11 @@ $event = Event::fire('auth.login', [$user]);
         <pre class="fragment"><code>
 @servers(['web' => '192.168.1.1'])
 @task('deploy', ['on' => 'web'])
-cd /var/www
-git pull origin master
+    cd /var/www
+    git pull origin master
 @endtask
-
-envoy run deploy
         </code></pre>
+        <pre class="fragment"><code>envoy run deploy</code></pre>
     </section>
 </section>
 <section>
