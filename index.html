@@ -31,9 +31,9 @@
         }
     </script>
     <style>
-        .reveal h2 {
-            margin-bottom: 1em;
-        }
+        /*.reveal h2 {*/
+            /*margin-bottom: 1em;*/
+        /*}*/
     </style>
 
     <!--[if lt IE 9]>
@@ -157,7 +157,9 @@
     <section>
         <h2>Packagist</h2>
         <p>Installs in the last 30 days</p>
-        <table>
+        <table width="100%">
+
+            <tbody>
             <tr>
                 <td>Zend Framework 2</td>
                 <td>70 000</td>
@@ -170,6 +172,7 @@
                 <td>Laravel 4</td>
                 <td>76 000</td>
             </tr>
+            </tbody>
         </table>
     </section>
 </section>
@@ -599,12 +602,12 @@ $user = User::find(123);
 $user->delete();
         </code></pre>
         <pre class="fragment"><code>User::destroy(123);</code></pre>
-        <pre class="fragment"><code>User::where('stars', '<', 10)->delete();</code></pre>
+        <!--<pre class="fragment"><code>User::where('stars', '<', 10)->delete();</code></pre>-->
     </section>
     <section>
         <h2>Soft deletes</h2>
 
-        <p>On delete, mark database record of deletion (deleted_at), but do not actual delete it. Do not show these
+        <p>On delete, mark database record of deletion, but do not actual delete it. Do not show these
             records in any queries.</p>
         <h4 class="fragment">Model class</h4>
         <pre class="fragment"><code>
@@ -758,7 +761,7 @@ class UserController extends BaseController {
     <section>
         <h2>Authentication</h2>
 
-        <p>Build-in authentication. Default uses the provided User model. No RBAC!</p>
+        <p>Build-in authentication, uses the User model. No RBAC!</p>
         <h4 class="fragment">Login</h4>
         <pre class="fragment"><code>
 if (Auth::attempt(['email' => $email, 'password' => $password]))
@@ -866,7 +869,7 @@ Event::listen('auth.login', function($user) {
     <ul>
         <li class="fragment">New directory structure</li>
         <li class="fragment">New and improved validation</li>
-        <li class="fragment">New File Generators</li>
+        <!--<li class="fragment">New File Generators</li>-->
         <li class="fragment">Flysystem</li>
         <li class="fragment">Socialite</li>
         <li class="fragment">Route Caching</li>
